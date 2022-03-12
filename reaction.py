@@ -1,18 +1,20 @@
-from gpiozero import Button, LED
 import time
-from random import uniform, choice
-from Adafruit_CharLCD import *
 from os import system
+from random import uniform, choice
+
+from gpiozero import Button, LED
+
+from Adafruit_CharLCD import *
 
 
-def initialise(lcd):
-    lcd.clear()
-    lcd.message("Yellow to start")
+def initialise(the_lcd):
+    the_lcd.clear()
+    the_lcd.message("Yellow to start")
 
 
-def player_wins(player, lcd):
-    lcd.clear()
-    lcd.message(player + " wins!")
+def player_wins(player, the_lcd):
+    the_lcd.clear()
+    the_lcd.message(player + " wins!")
 
 
 yellow_led = LED(11)
