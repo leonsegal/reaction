@@ -8,7 +8,7 @@ from Adafruit_CharLCD import *
 
 def initialise(the_lcd):
     the_lcd.clear()
-    the_lcd.message("Yellow to start")
+    the_lcd.message("Press a button")
 
 
 def player_wins(player, the_lcd):
@@ -21,13 +21,17 @@ red_led = LED(10)
 
 blue_player = Button(8, pull_up=False)
 red_player = Button(7, pull_up=False)
-menu_button = Button(15, pull_up=False)  # yellow
 
 lcd = Adafruit_CharLCD()
 initialise(lcd)
 
+
+def is_led_on():
+    return dir().count('selected_led') == 1
+
+
 while True:
-    if menu_button.is_pressed:
+    if not is_led_on() and (red_player.is_pressed or blue_player.is_pressed):
         lcd.clear()
         lcd.message("Get ready...")
         delay = uniform(2, 3)
