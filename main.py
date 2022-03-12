@@ -7,10 +7,15 @@ from os import system
 
 def show_menu(counter):
     lcd.clear()
-    menu_name = menu_items.get(counter)
-    lcd.message(menu_name['display'] + ": \nYellow to select")
+    menu_item = menu_items.get(counter)
+    lcd.message(menu_item['display'] + ": \nYellow to select")
     while True:
-        sleep(1)
+        if select_button.is_pressed:
+            counter += 1
+            show_menu(counter)
+        if menu_button.is_pressed:
+            method_to_call = getattr(menu_item, 'name')
+            method_to_call()
 
 
 def tennis():
@@ -95,8 +100,8 @@ lcd = Adafruit_CharLCD()
 # Input items
 blue_player = Button(8, pull_up=False)
 red_player = Button(7, pull_up=False)
-# menu_button = Button(10, pull_up=False)
-# select_button = Button(11, pull_up=False)
+menu_button = Button(21, pull_up=False)
+select_button = Button(21, pull_up=False)
 
 # Game items
 red_score = 0
