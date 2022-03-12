@@ -6,9 +6,10 @@ from os import system
 
 
 def show_menu(counter):
-    lcd.clear()
-    menu_name = menu_items.get(counter)
-    lcd.message(menu_name['display'] + ": \nYellow to select")
+    while True:
+        lcd.clear()
+        menu_name = menu_items.get(counter)
+        lcd.message(menu_name['display'] + ": \nYellow to select")
 
 
 def tennis():
