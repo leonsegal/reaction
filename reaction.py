@@ -1,14 +1,28 @@
 import time
 from random import uniform, choice
-
 from gpiozero import Button, LED
-
 from Adafruit_CharLCD import *
+
+red_score = 0
+blue_score = 0
 
 
 def initialise(the_lcd):
-    the_lcd.clear()
-    the_lcd.message("Press a button")
+    leading_spaces = 0
+    asc = True
+    while True:
+        if asc == True:
+            leading_spaces += 1
+            if leading_spaces == 15:
+                asc = False
+        else:
+            leading_spaces -= 1
+            if leading_spaces == 0:
+                asc = True
+
+        sleep(0.03)
+        the_lcd.clear()
+        the_lcd.message((" " * leading_spaces) + "*\n")
 
 
 def player_wins(player, the_lcd):
@@ -27,7 +41,7 @@ initialise(lcd)
 
 
 def is_led_on():
-    return dir().count('selected_led') == 1
+    return dir().count("selected_led") == 1
 
 
 while True:
