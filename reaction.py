@@ -1,5 +1,4 @@
 import time
-from os import system
 from random import uniform, choice
 
 from gpiozero import Button, LED
@@ -23,18 +22,11 @@ red_led = LED(10)
 blue_player = Button(8, pull_up=False)
 red_player = Button(7, pull_up=False)
 menu_button = Button(15, pull_up=False)  # yellow
-back_button = Button(14, pull_up=False)  # white
 
 lcd = Adafruit_CharLCD()
 initialise(lcd)
 
 while True:
-    if back_button.is_pressed:
-        lcd.clear()
-        lcd.message("Shutting down...")
-        system("sudo halt")
-        break
-
     if menu_button.is_pressed:
         lcd.clear()
         lcd.message("Get ready...")
