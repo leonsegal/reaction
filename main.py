@@ -7,21 +7,23 @@ from os import system
 
 def show_menu(counter):
     lcd.clear()
-    lcd.message(menu_items[counter] + ": \nYellow to select")
+    menu_name = menu_items.get(counter)
+    lcd.message(menu_name['display'] + ": \nYellow to select")
 
 
 def tennis():
     leading_spaces = 0
-    asc = True
+    is_asc = True
+
     while True:
-        if asc == True:
+        if is_asc:
             leading_spaces += 1
             if leading_spaces == 15:
-                asc = False
+                is_asc = False
         else:
             leading_spaces -= 1
             if leading_spaces == 0:
-                asc = True
+                is_asc = True
 
         sleep(0.03)
         lcd.clear()
@@ -41,7 +43,7 @@ def reaction():
                 delay = 3
                 close_time = time.time() + delay
                 if time.time() > close_time:
-                    initialise(lcd)
+                    initialise()
 
             selected_led.on()
 
@@ -55,7 +57,7 @@ def reaction():
                 player_wins("Red", lcd)
             selected_led.off()
             time.sleep(3)
-            initialise(lcd)
+            initialise()
         if red_player.is_pressed:
             if selected_led == yellow_led:
                 player_wins("Red", lcd)
@@ -63,7 +65,7 @@ def reaction():
                 player_wins("Blue", lcd)
             selected_led.off()
             time.sleep(3)
-            initialise(lcd)
+            initialise()
 
 
 def golf():
@@ -74,6 +76,9 @@ def golf():
 def shut_down():
     system("sudo halt")
 
+def initialise():
+    lcd.clear()
+    lcd.message('hello') # todo
 
 def player_wins(player, the_lcd):
     the_lcd.clear()
@@ -88,18 +93,18 @@ lcd = Adafruit_CharLCD()
 # Input items
 blue_player = Button(8, pull_up=False)
 red_player = Button(7, pull_up=False)
-menu_button = Button(10, pull_up=False)
-select_button = Button(11, pull_up=False)
+# menu_button = Button(10, pull_up=False)
+# select_button = Button(11, pull_up=False)
 
 # Game items
 red_score = 0
 blue_score = 0
-menu_items = [
-    "Tennis",
-    "Reaction",
-    "Golf",
-    "Shut Down",
-]
+menu_items = {
+    0: {'name': 'tennis', 'display': "Tennis"},
+    1: {'name': 'reaction', 'display': "Reaction"},
+    2: {'name': 'golf', 'display': "Golf"},
+    3: {'name': 'shut_down', 'display': "Shut Down"},
+}
 menu_counter = 0
 is_playing_game = False
 
